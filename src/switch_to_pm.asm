@@ -1,3 +1,4 @@
+[bits 16]
 ; switch to protected mode
 switch_to_pm:
 	cli
@@ -6,7 +7,7 @@ switch_to_pm:
 	or eax,0x1
 	mov cr0,eax
 	jmp CODE_SEG:init_pm
-	
+
 [bits 32]
 init_pm:
 	mov ax,DATA_SEG

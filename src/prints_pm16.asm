@@ -39,7 +39,7 @@ prints_pm_loop:
 xor di,di
 xor ax,ax
 mov al,[bx]
-mov ah,WHITE
+mov ah,COLOR
 cmp al,0x00
 je prints_pm_exit
 add di,dx
@@ -54,6 +54,6 @@ ret
 
 setConstants:
 VIDEOBUFFER equ 0xb800	; address
-WHITE		equ 0x1f 	; white on black
+COLOR		equ 0x1e 	; yellow on blue
 COL db 0x00
 ROW db 0x00
