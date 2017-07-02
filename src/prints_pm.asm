@@ -4,7 +4,6 @@ COLOR equ 0x0f
 
 prints_pm:
   pusha
-  xor eax,eax
   mov edx,VIDEO_MEMORY
 
 prints_pm_loop:
@@ -15,7 +14,7 @@ prints_pm_loop:
   je prints_pm_exit
 
   mov [edx], ax
-  inc ebx
+  add ebx,0x1
   add edx,0x2
 
   jmp prints_pm_loop
