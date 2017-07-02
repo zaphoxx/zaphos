@@ -1,0 +1,12 @@
+!#/bin/bash
+echo '[+] ## start ##'
+echo '[+] compile source'
+nasm -fbin ./src/boot.asm -o ./bin/boot.bin
+echo '[+] create virtual floppy disk image'
+sudo dd bs=512 count=2880 if=/dev/zero of=./floppy.img
+sudo mkfs.msdos ./floppy.img
+echo '[+] write os to floppy image'
+sudo dd conv=notrunc if=./bin/boot.bin of=./floppy.img
+echo '[+] ## complete ##'
+sudo chmod 755 ./floppy.img
+qemu ./bin/boot.bin
