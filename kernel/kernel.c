@@ -1,4 +1,4 @@
 void main(){
-	char * videoBuffer = 0xb8000;
+	char * videoBuffer = (char *) 0xb8000;
 	*videoBuffer = 'X';
 }
