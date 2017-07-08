@@ -1,0 +1,31 @@
+#
+C_SOURCES=$(wildcard kernel/*.c drivers/*.c)
+ASM_SRC=$(wildcard boot/*.asm kernel/*.asm)
+HEADERS=$(wildcard kernel/*.h drivers/*.h)
+
+OBJ=${C_SOURCES:.c=.o}
+
+# default target
+all: disk.img
+
+run: all
+	qemu $<
+
+disk.img: boot/boot.bin kernel.bin
+	cat $^ > $@
+
+kernel.bin: kernel/kernel_entry.o ${OBJ}
+	ld -o $@ -m elf_i386 -Ttext 0x1000 $^ --oformat binary
+
+%.o:%.c ${HEADERS}
+	gcc -m32 -ffreestanding -c $< -o $@
+
+%.o: %.asm
+	nasm $< -felf -o $@
+
+%.bin:%.asm
+	nasm $< -fbin -o $@
+
+clean:
+	rm -f ./*.o ./*.bin ./*.img
+	rm -f ./kernel/*.o boot/*.bin drivers/*.o
