@@ -5,6 +5,15 @@ void test(){
     writeCell(frameBuffer,'Z',i,0,15);
   }
 }
+/** clearFrameBuffer
+*
+**/
+void clearFrameBuffer(unsigned char *frameBuffer){
+  unsigned int numberOfCells = 80*25*2;
+  for (int i=0;i<numberOfCells;i++){
+    writeCell(frameBuffer,0x00,i,0x00,0x00);
+  }
+}
 /** write_cell:
 * @param *fb framebuffer pointer to write to
 * @param character
@@ -20,6 +29,18 @@ void writeCell(unsigned char *frameBuffer,
   frameBuffer[location]=character;
   frameBuffer[location+1]=((backgroundColor & 0x0f) << 4) | (foregroundColor & 0x0f);
 }
+
+/** fbWrite: write string to frameBuffer
+**/
+int fbWrite(char *string){
+  // print string to selected row/col location
+  // print string to current position or
+  // print string to cursor position
+  // return string length ?
+  int length=-1;
+  return length;
+}
+
 /** printc:
 * print a single char to the screen
 * @param character - character to print
