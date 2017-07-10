@@ -6,7 +6,7 @@ AS_SRCS=$(wildcard boot/*.asm)
 HEADERS=$(wildcard kernel/*.h drivers/*.h)
 OBJ=${C_SOURCES:.c=.o}
 AS_FLAGS=-felf
-CC_FLAGS=-m32 -ffreestanding -c
+CC_FLAGS=-m32 -ffreestanding -Ttext 0x1000 -c
 LD_FLAGS=-melf_i386 -Ttext 0x1000 --oformat binary
 
 run: all
@@ -23,10 +23,10 @@ disk.img: boot.bin kernel.bin
 %.o : %.asm
 #kernel_entry.o: ./kernel/kernel_entry.asm
 	$(AS) $(AS_FLAGS) $< -o $@
-
-%.o:%.c
+# NOTE: you can not just use %.o : %.c %.h 
+%.o:%.c $(HEADERS)
 #kernel.o: kernel/kernel.c
-	$(CC) $(CC_FLAGS) $< -o $@ 	# make sure to use the -m32 with gcc
+	$(CC) $(CC_FLAGS) $< -o $@ 							# make sure to use the -m32 with gcc
 																					# and -melf_i386 with ld to align the
 																					# object file formats
 
