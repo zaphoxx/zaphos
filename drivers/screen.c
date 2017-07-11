@@ -32,6 +32,7 @@ void writeCell(unsigned char *frameBuffer,
 
 /** fbWrite: write string to frameBuffer
 **/
+/*
 int fbWrite(char *string){
   // print string to selected row/col location
   // print string to current position or
@@ -40,7 +41,31 @@ int fbWrite(char *string){
   int length=-1;
   return length;
 }
+*/
+int fbWrite(char *string,int length,int location){
+  enum color bg=black;
+  enum color fg=white;
+  return fbWriteColor(string,length,location,bg,fg);
+}
+int fbWriteColor(char *string,int length,int location,unsigned char bg,unsigned char fg){
+  unsigned char * frameBuffer = (unsigned char *) VIDEO_ADDRESS;
+  int c = -1;
+  // translate screen cell location to video_address location
+  // remember 1 cell in framebuffer is 2bytes (1byte for ascii
+  // char and 1 byte for the attributes fg and bg colors)
 
+  // loop through each char in string and write to framebuffer
+  for (int i=0;i<length;i++){
+    int next = 2*i;
+    writeCell(frameBuffer,string[i],sLoc2fLoc(location)+next,bg,fg);
+    c++;
+  }
+  return c;
+}
+int sLoc2fLoc(int screenLocation){
+  int frameLocation = 2 * (screenLocation - ( screenLocation % 2 ));
+  return frameLocation;
+}
 /** printc:
 * print a single char to the screen
 * @param character - character to print
