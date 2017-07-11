@@ -9,7 +9,7 @@ void test(){
 *
 **/
 void clearFrameBuffer(unsigned char *frameBuffer){
-  unsigned int numberOfCells = 80*25*2;
+  int numberOfCells = 80*25*2;
   for (int i=0;i<numberOfCells;i++){
     writeCell(frameBuffer,0x00,i,0x00,0x00);
   }

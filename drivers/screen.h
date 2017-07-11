@@ -26,6 +26,13 @@ enum color{
   lightbrown,
   white
 };
+
+void clearFrameBuffer(unsigned char *frameBuffer);
+void writeCell(unsigned char *frameBuffer,
+                char character,
+                unsigned int location,
+                unsigned char backgroundColor,
+                unsigned char foregroundColor);
 int fbWriteColor(char *string,int length,int location,unsigned char bg,unsigned char fg);
 int fbWrite(char *string,int length,int location);
 int sLoc2fLoc(int screenLocation);

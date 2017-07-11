@@ -1,6 +1,6 @@
 ; a boot sector that enters 32-bit protected mode
 [ORG 0x7c00]			;  BIOS likes always to load the boot sector to the address 0x7c00
-KERNEL_OFFSET equ 0x1000
+KERNEL_OFFSET equ 0x2000
 	mov ax,0
 	mov es,ax
 	mov [BOOT_DRIVE],dl
